@@ -1,7 +1,11 @@
-const { network } = require("hardhat");
-const { networkConfig, devChains } = require("../helper-hardhat-config");
+// const { network } = require("hardhat");
+// const { networkConfig, devChains } = require("../helper-hardhat-config");
+import hre from "hardhat";
+const { network } = hre;
+import { networkConfig, devChains } from "../helper-hardhat-config.js";
+import { verify } from "../utils/verify.js";
 
-module.exports = async ({ getNamedAccounts, deployments }) => {
+async function deployFundMe({ getNamedAccounts, deployments }) {
   const { deploy, log } = deployments;
   const { deployer } = await getNamedAccounts();
   const chainId = network.config.chainId;
@@ -20,6 +24,12 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     log: true,
   });
   log("-------------------------------");
-};
 
-module.exports.tags = ["all", "fundme"];
+  if (!devChains.includes(network.name))
+    await verify(fundMe.address, ethUsdPriceFeedAddress);
+}
+
+deployFundMe.tags = ["all", "fundme"];
+deployFundMe.dependencies = ["mocks"];
+
+export default deployFundMe;

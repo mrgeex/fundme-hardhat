@@ -13,9 +13,4 @@ const devChains = ["hardhat", "localhost"];
 const DECIMALS = 8;
 const INITIAL_ANSWER = 200000000;
 
-module.exports = {
-  networkConfig,
-  devChains,
-  DECIMALS,
-  INITIAL_ANSWER,
-};
+export { networkConfig, devChains, DECIMALS, INITIAL_ANSWER };

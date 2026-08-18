@@ -1,11 +1,18 @@
-const { network } = require("hardhat");
-const {
+// const { network } = require("hardhat");
+// const {
+//   devChains,
+//   DECIMALS,
+//   INITIAL_ANSWER,
+// } = require("../helper-hardhat-config");
+import hre from "hardhat";
+const { network } = hre;
+import {
   devChains,
   DECIMALS,
   INITIAL_ANSWER,
-} = require("../helper-hardhat-config");
+} from "../helper-hardhat-config.js";
 
-module.exports = async ({ getNamedAccounts, deployments }) => {
+async function deployMocks({ getNamedAccounts, deployments }) {
   const { deploy, log } = deployments;
   const { deployer } = await getNamedAccounts();
 
@@ -21,6 +28,8 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     log("\nMocks Deployed!");
     log("---------------------------------");
   }
-};
+}
 
-module.exports.tags = ["all", "mocks"];
+deployMocks.tags = ["all", "mocks"];
+
+export default deployMocks;
