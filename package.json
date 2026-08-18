@@ -1,31 +1,25 @@
 {
-  "name": "fundme-hardhat",
-  "packageManager": "yarn@4.14.1",
-  "devDependencies": {
-    "@nomicfoundation/hardhat-ethers": "^4.0.15",
-    "@nomicfoundation/hardhat-ethers-chai-matchers": "^3.0.11",
-    "@nomicfoundation/hardhat-ignition": "^3.1.8",
-    "@nomicfoundation/hardhat-ignition-ethers": "^3.1.6",
-    "@nomicfoundation/hardhat-keystore": "^3.0.12",
-    "@nomicfoundation/hardhat-mocha": "^3.0.21",
-    "@nomicfoundation/hardhat-network-helpers": "^3.0.11",
-    "@nomicfoundation/hardhat-toolbox-mocha-ethers": "^3.0.7",
-    "@nomicfoundation/hardhat-typechain": "^3.1.1",
-    "@nomicfoundation/hardhat-verify": "^3.0.21",
-    "@nomicfoundation/ignition-core": "^3.1.8",
-    "@types/chai": "^5.2.3",
-    "@types/chai-as-promised": "^8.0.1",
-    "@types/mocha": ">=10.0.10",
-    "@types/node": "^22.8.5",
-    "chai": "^6.2.2",
-    "ethers": "^6.14.0",
-    "forge-std": "foundry-rs/forge-std#v1.9.4",
-    "hardhat": "^3.13.0",
-    "mocha": "^11.0.0",
-    "typescript": "~6.0.3"
-  },
-  "type": "module",
   "dependencies": {
-    "solhint": "^6.2.4"
+    "@chainlink/contracts": "^0.3.1",
+    "hardhat": "^2.29.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-ethers": "^3.0.0",
+    "@nomicfoundation/hardhat-ignition": "^0.15.0",
+    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.0",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^6.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers",
+    "@typechain/ethers-v6": "^0.5.0",
+    "@typechain/hardhat": "^9.0.0",
+    "chai": "^4.2.0",
+    "dotenv": "^17.4.2",
+    "ethers": "^6.17.0",
+    "hardhat-deploy": "1",
+    "hardhat-gas-reporter": "^2.3.0",
+    "solidity-coverage": "^0.8.17",
+    "typechain": "^8.3.0"
   }
 }
