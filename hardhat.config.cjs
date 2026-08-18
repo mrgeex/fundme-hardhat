@@ -2,6 +2,7 @@ const { config } = require("dotenv");
 
 require("@nomicfoundation/hardhat-toolbox");
 require("hardhat-deploy");
+require("@nomiclabs/hardhat-ethers");
 require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
