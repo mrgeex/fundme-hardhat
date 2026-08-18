@@ -4,10 +4,16 @@ pragma solidity ^0.8.7;
 import {PriceConvertor} from "./priceConvertor.sol";
 import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
-error NotSentEnough();
-error NotOwner();
-error WithdrawFailed();
+error FundMe__NotSentEnough();
+error FundMe__NotOwner();
+error FundMe__WithdrawFailed();
 
+/**
+ * @title A crowd funding contract
+ * @author Mr. Geex
+ * @notice Just another sample crowd funding contract
+ * @dev Price feeds are used as our library
+ */
 contract FundMe {
     using PriceConvertor for uint256;
 
@@ -17,15 +23,29 @@ contract FundMe {
     address public immutable i_owner;
     AggregatorV3Interface public priceFeed;
 
+    modifier onlyOwner() {
+        // require(msg.sender == i_owner, "sender is not owner!");
+        if (msg.sender != i_owner) revert FundMe__NotOwner();
+        _; // function body
+    }
+
     constructor(address priceFeedAddress) {
         i_owner = msg.sender;
         priceFeed = AggregatorV3Interface(priceFeedAddress);
     }
 
+    receive() external payable {
+        fund();
+    }
+
+    fallback() external payable {
+        fund();
+    }
+
     function fund() public payable {
         // require(msg.value.getConversionRate() >= MIN_USD, "Didn't send enough!");
         if (msg.value.getConversionRate(priceFeed) < MIN_USD)
-            revert NotSentEnough();
+            revert FundMe__NotSentEnough();
         funders.push(msg.sender);
         addressToAmountFunded[msg.sender] += msg.value;
     }
@@ -37,37 +57,13 @@ contract FundMe {
         }
         funders = new address[](0);
 
-        // 3 different ways to send eth from a contract: transfer/send/call
-        // transfer -> automatically reverts (2300 gas)
-        // payable(msg.sender).transfer(address(this).balance);
-
-        // send -> returns boolean, no revert (2300 gas)
-        // bool sendSuccess = payable(msg.sender).send(address(this).balance);
-        // require(sendSuccess, "Send failed!");
-
-        // call -> returns boolean, no revert (2300 gas)
         (bool callSuccess, ) = payable(msg.sender).call{
             value: address(this).balance
         }("");
-        // require(callSuccess, "call failed!");
-        if (!callSuccess) revert WithdrawFailed();
+        if (!callSuccess) revert FundMe__WithdrawFailed();
     }
 
     function getPrice(uint256 amount) public view returns (uint256) {
         return amount.getConversionRate(priceFeed);
-    }
-
-    modifier onlyOwner() {
-        // require(msg.sender == i_owner, "sender is not owner!");
-        if (msg.sender != i_owner) revert NotOwner();
-        _; // function body
-    }
-
-    receive() external payable {
-        fund();
-    }
-
-    fallback() external payable {
-        fund();
     }
 }
