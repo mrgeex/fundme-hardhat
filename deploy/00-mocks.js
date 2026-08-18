@@ -1,9 +1,3 @@
-// const { network } = require("hardhat");
-// const {
-//   devChains,
-//   DECIMALS,
-//   INITIAL_ANSWER,
-// } = require("../helper-hardhat-config");
 import hre from "hardhat";
 const { network } = hre;
 import {

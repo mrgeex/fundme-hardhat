@@ -34,14 +34,6 @@ contract FundMe {
         priceFeed = AggregatorV3Interface(priceFeedAddress);
     }
 
-    receive() external payable {
-        fund();
-    }
-
-    fallback() external payable {
-        fund();
-    }
-
     function fund() public payable {
         // require(msg.value.getConversionRate() >= MIN_USD, "Didn't send enough!");
         if (msg.value.getConversionRate(priceFeed) < MIN_USD)

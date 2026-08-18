@@ -1,5 +1,3 @@
-const { config } = require("dotenv");
-
 require("@nomicfoundation/hardhat-toolbox");
 require("hardhat-deploy");
 require("@nomiclabs/hardhat-ethers");
@@ -10,10 +8,10 @@ module.exports = {
   solidity: {
     compilers: [{ version: "0.8.7" }, { version: "0.6.6" }],
   },
-  defaultNetwork: "hardhat",
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
   },
+  defaultNetwork: "hardhat",
   networks: {
     hardhat: {
       chainId: 31337,

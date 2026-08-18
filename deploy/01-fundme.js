@@ -1,5 +1,3 @@
-// const { network } = require("hardhat");
-// const { networkConfig, devChains } = require("../helper-hardhat-config");
 import hre from "hardhat";
 const { network } = hre;
 import { networkConfig, devChains } from "../helper-hardhat-config.js";
