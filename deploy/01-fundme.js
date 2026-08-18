@@ -22,11 +22,12 @@ async function deployFundMe({ getNamedAccounts, deployments }) {
     from: deployer,
     args: [ethUsdPriceFeedAddress],
     log: true,
+    waitConfirmations: network.config.blockConfirmations || 1,
   });
   log("-------------------------------");
 
   if (!devChains.includes(network.name))
-    await verify(fundMe.address, ethUsdPriceFeedAddress);
+    await verify(fundMe.address, [ethUsdPriceFeedAddress]);
 }
 
 deployFundMe.tags = ["all", "fundme"];

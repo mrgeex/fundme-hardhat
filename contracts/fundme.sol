@@ -45,7 +45,7 @@ contract FundMe {
         // bool sendSuccess = payable(msg.sender).send(address(this).balance);
         // require(sendSuccess, "Send failed!");
 
-        // send -> returns boolean, no revert (2300 gas)
+        // call -> returns boolean, no revert (2300 gas)
         (bool callSuccess, ) = payable(msg.sender).call{
             value: address(this).balance
         }("");
