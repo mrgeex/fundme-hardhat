@@ -10,8 +10,8 @@ module.exports = {
     compilers: [{ version: "0.8.7" }, { version: "0.6.6" }],
   },
   gasReporter: {
-    enabled: true,
-    outputFile: "gasReport2.txt",
+    enabled: false,
+    outputFile: "gasReport.txt",
     noColors: true,
     currency: "USD",
     coinmarketcap: process.env.COINTMARKETCAP_API_KEY,
