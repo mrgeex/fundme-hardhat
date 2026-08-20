@@ -17,11 +17,11 @@ error FundMe__WithdrawFailed();
 contract FundMe {
     using PriceConvertor for uint256;
 
-    uint constant MIN_USD = 50 * 1e18;
-    address[] public s_funders;
-    mapping(address => uint256) public s_addressToAmountFunded;
-    address public immutable i_owner;
-    AggregatorV3Interface public s_priceFeed;
+    uint public constant MIN_USD = 50 * 1e18;
+    address[] private s_funders;
+    mapping(address => uint256) private s_addressToAmountFunded;
+    address private immutable i_owner;
+    AggregatorV3Interface private s_priceFeed;
 
     modifier onlyOwner() {
         // require(msg.sender == i_owner, "sender is not owner!");
@@ -56,5 +56,23 @@ contract FundMe {
 
     function getPrice(uint256 amount) public view returns (uint256) {
         return amount.getConversionRate(s_priceFeed);
+    }
+
+    function getFunder(uint256 index) public view returns (address) {
+        return s_funders[index];
+    }
+
+    function getOwner() public view returns (address) {
+        return i_owner;
+    }
+
+    function getAddressToAmountFunded(
+        address funder
+    ) public view returns (uint256) {
+        return s_addressToAmountFunded[funder];
+    }
+
+    function getPriceFeed() public view returns (AggregatorV3Interface) {
+        return s_priceFeed;
     }
 }

@@ -15,7 +15,7 @@ describe("Testing Fundme", () => {
 
   describe("constructor", () => {
     it("sets the correct aggregator address", async () => {
-      const response = await fundMe.s_priceFeed();
+      const response = await fundMe.getPriceFeed();
       assert.equal(response, MockV3Aggregator.target);
     });
   });
@@ -29,12 +29,12 @@ describe("Testing Fundme", () => {
     });
     it("Should update the addressToAmountFunded list", async () => {
       await fundMe.fund({ value: sendValue });
-      const response = await fundMe.s_addressToAmountFunded(deployer);
+      const response = await fundMe.getAddressToAmountFunded(deployer);
       assert.equal(response.toString(), sendValue.toString());
     });
     it("Should add funder to the funders array", async () => {
       await fundMe.fund({ value: sendValue });
-      const response = await fundMe.s_funders(0);
+      const response = await fundMe.getFunder(0);
       assert.equal(response.toString(), deployer.toString());
     });
   });
@@ -93,12 +93,12 @@ describe("Testing Fundme", () => {
         (startContractBalance + startDeployerBalance).toString(),
         (endDeployerBalance + gasCost).toString(),
       );
-      await expect(fundMe.s_funders(0)).to.be.reverted;
+      await expect(fundMe.getFunder(0)).to.be.reverted;
 
       const fundersAmount = await Promise.all(
         accounts
           .slice(1, 7)
-          .map((funder) => fundMe.s_addressToAmountFunded(funder)),
+          .map((funder) => fundMe.getAddressToAmountFunded(funder)),
       );
       fundersAmount.forEach((amount) => assert.equal(amount, 0));
     });
