@@ -4,16 +4,16 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+yarn.lock
+
 .env
 .agents
 .claude
 .idea
+
 CLAUDE.md
 AGENTS.md
-artifacts
-cache
 types
-deployments
 
 # Whether you use PnP or not, the node_modules folder is often used to store
 # build artifacts that should be gitignored
@@ -27,8 +27,9 @@ node_modules
 .pnp.*
 
 # Hardhat files
-/cache
-/artifacts
+cache
+artifacts
+deployments
 
 # TypeChain files
 /typechain
