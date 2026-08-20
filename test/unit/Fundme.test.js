@@ -15,7 +15,7 @@ describe("Testing Fundme", () => {
 
   describe("constructor", () => {
     it("sets the correct aggregator address", async () => {
-      const response = await fundMe.priceFeed();
+      const response = await fundMe.s_priceFeed();
       assert.equal(response, MockV3Aggregator.target);
     });
   });
@@ -24,17 +24,17 @@ describe("Testing Fundme", () => {
     it("Fails when not enough ETH is sent", async () => {
       await expect(fundMe.fund()).to.be.revertedWithCustomError(
         fundMe,
-        "FundMe__NotSentEnough"
+        "FundMe__NotSentEnough",
       );
     });
     it("Should update the addressToAmountFunded list", async () => {
       await fundMe.fund({ value: sendValue });
-      const response = await fundMe.addressToAmountFunded(deployer);
+      const response = await fundMe.s_addressToAmountFunded(deployer);
       assert.equal(response.toString(), sendValue.toString());
     });
     it("Should add funder to the funders array", async () => {
       await fundMe.fund({ value: sendValue });
-      const response = await fundMe.funders(0);
+      const response = await fundMe.s_funders(0);
       assert.equal(response.toString(), deployer.toString());
     });
   });
@@ -46,7 +46,7 @@ describe("Testing Fundme", () => {
 
     it("Should withdraw ETH", async () => {
       const startContractBalance = await ethers.provider.getBalance(
-        fundMe.target
+        fundMe.target,
       );
       const startDeployerBalance = await ethers.provider.getBalance(deployer);
 
@@ -55,14 +55,14 @@ describe("Testing Fundme", () => {
       const gasCost = trxReceipt.gasPrice * trxReceipt.gasUsed;
 
       const endContractBalance = await ethers.provider.getBalance(
-        fundMe.target
+        fundMe.target,
       );
       const endDeployerBalance = await ethers.provider.getBalance(deployer);
 
       assert.equal(endContractBalance.toString(), 0);
       assert.equal(
         (startContractBalance + startDeployerBalance).toString(),
-        (endDeployerBalance + gasCost).toString()
+        (endDeployerBalance + gasCost).toString(),
       );
     });
 
@@ -71,11 +71,11 @@ describe("Testing Fundme", () => {
       await Promise.all(
         accounts
           .slice(1, 7)
-          .map((funder) => fundMe.connect(funder).fund({ value: sendValue }))
+          .map((funder) => fundMe.connect(funder).fund({ value: sendValue })),
       );
 
       const startContractBalance = await ethers.provider.getBalance(
-        fundMe.target
+        fundMe.target,
       );
       const startDeployerBalance = await ethers.provider.getBalance(deployer);
 
@@ -84,21 +84,21 @@ describe("Testing Fundme", () => {
       const gasCost = trxReceipt.gasPrice * trxReceipt.gasUsed;
 
       const endContractBalance = await ethers.provider.getBalance(
-        fundMe.target
+        fundMe.target,
       );
       const endDeployerBalance = await ethers.provider.getBalance(deployer);
 
       assert.equal(endContractBalance.toString(), 0);
       assert.equal(
         (startContractBalance + startDeployerBalance).toString(),
-        (endDeployerBalance + gasCost).toString()
+        (endDeployerBalance + gasCost).toString(),
       );
-      await expect(fundMe.funders(0)).to.be.reverted;
+      await expect(fundMe.s_funders(0)).to.be.reverted;
 
       const fundersAmount = await Promise.all(
         accounts
           .slice(1, 7)
-          .map((funder) => fundMe.addressToAmountFunded(funder))
+          .map((funder) => fundMe.s_addressToAmountFunded(funder)),
       );
       fundersAmount.forEach((amount) => assert.equal(amount, 0));
     });
@@ -109,7 +109,7 @@ describe("Testing Fundme", () => {
 
       await expect(attacker.withdraw()).to.be.revertedWithCustomError(
         fundMe,
-        "FundMe__NotOwner"
+        "FundMe__NotOwner",
       );
     });
   });

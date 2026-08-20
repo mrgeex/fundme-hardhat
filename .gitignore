@@ -7,9 +7,9 @@
 .env
 .agents
 .claude
+.idea
 CLAUDE.md
 AGENTS.md
-node_modules
 artifacts
 cache
 types
@@ -25,9 +25,6 @@ node_modules
 
 #!.yarn/cache
 .pnp.*
-
-node_modules
-.env
 
 # Hardhat files
 /cache
